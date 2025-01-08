@@ -12,7 +12,7 @@ const Navbar = () => {
 
             <section className='flexx space-x-5'>
                 <LuMoon className='text-xl text-gray-600 cursor-pointer'/>
-                <section className='flexx space-x-2 border-l-2 border-gray-200 pl-3 py-[17px] cursor-pointer'>
+                <section className='flexx space-x-2 border-l-2 border-gray-100 pl-3 py-[17px] cursor-pointer'>
                     <p className='text-primary text-[15px]'>Hendra Adri</p>
                     <LuCircleUserRound className='text-xl text-gray-600'/>
                 </section>

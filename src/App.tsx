@@ -7,6 +7,7 @@ import Incomes from './pages/Incomes'
 import Expenses from './pages/Expenses'
 import Plans from './pages/Plans'
 import AddIncome from './pages/AddIncome'
+import EditIncome from './pages/EditIncome'
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
                 <Route path="/dashboard" element={<Dashboard/>}/>
                 <Route path="/incomes" element={<Incomes/>}/>
                 <Route path="/incomes/add-income" element={<AddIncome/>}/>
+                <Route path="/incomes/edit-income/:id" element={<EditIncome/>}/>
                 <Route path="/expenses" element={<Expenses/>}/>
                 <Route path="/plans" element={<Plans/>}/>
             </Route>

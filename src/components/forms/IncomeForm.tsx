@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { v4 as uuid } from "uuid"
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { incomesStore } from '../../store/incomesStore'
 
 type FormTypes = {
@@ -13,10 +13,15 @@ type FormTypes = {
     incomeDescription: string
 }
 
-const IncomeForm = () => {
+type PropsTypes = {
+    isEdit: boolean
+}
+
+const IncomeForm = ({isEdit}: PropsTypes) => {
     const navigate = useNavigate()
+    const params = useParams()
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { register, formState: {errors}, handleSubmit, reset } = useForm<FormTypes>({
+    const { register, formState: {errors}, handleSubmit, reset, setValue } = useForm<FormTypes>({
         defaultValues: {
             incomeName: "",
             incomeType: "",
@@ -24,7 +29,7 @@ const IncomeForm = () => {
             incomeDescription: ""
         }
     })
-    const { setIncome } = incomesStore()
+    const { incomes, setIncome, setIncomes } = incomesStore()
 
     const submitHandler = (values: FormTypes) => {
         setIsLoading(true)
@@ -34,13 +39,44 @@ const IncomeForm = () => {
         }
         return new Promise((resolve) => {
             setTimeout(() => {
-                setIncome(newIncome)
+                if(!isEdit) {
+                    setIncome(newIncome)
+                } else {
+                    const income = getSpecificIncome()
+                    const newIncomes = incomes.map(obj => {
+                        if(obj.id === income.id) {
+                            return {
+                                ...obj, 
+                                ...values
+                            }
+                        } else {
+                            return obj
+                        }
+                    })
+                    setIncomes(newIncomes)
+                }
                 reset()
                 navigate("/incomes")
                 resolve(1)
-            }, 2000);
+            }, 2000)
         })
     }
+
+    const getSpecificIncome = (): IncomeTypes => {
+        return incomes.find(income => income.id === params.id)
+    }
+
+    useEffect(() => {
+        if(isEdit && params.id) {
+            const income = getSpecificIncome()
+            setValue("incomeName", income.incomeName)
+            setValue("incomeType", income.incomeType)
+            setValue("incomeAmount", income.incomeAmount)
+            setValue("incomeDate", income.incomeDate)
+            setValue("incomeDescription", income.incomeDescription)
+        }
+    }, [isEdit, params.id])
+    
 
     return (
         <section className='bg-white rounded-lg p-4 shadow-sm'>

@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar'
 
 const MainWrapper = () => {
     return (
-        <main className='min-h-screen flex bg-gray-50'>
+        <main className='min-h-screen flex bg-gray-100'>
             <Sidebar/>
             <section className='flex-1'>
                 <Navbar/>

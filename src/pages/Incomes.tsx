@@ -11,7 +11,7 @@ const Incomes = () => {
 
     return (
         <>
-            <PageHeader isTables>
+            <PageHeader pageTitle='Incomes' isTables>
                 <button className='border border-gray-200 rounded-md text-white text-sm py-2 px-4 bg-primary hover:opacity-90' onClick={() => navigate("/incomes/add-income")}>
                     Add new income
                 </button>
@@ -60,7 +60,7 @@ const Incomes = () => {
                                         {new Date(income.incomeDate).toDateString()}
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <button className='border-none outline-none cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-md mr-2 hover:opacity-90'>Edit</button>
+                                        <button className='border-none outline-none cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-md mr-2 hover:opacity-90' onClick={() => navigate(`/incomes/edit-income/${income.id}`)}>Edit</button>
                                         <button className='border-none outline-none cursor-pointer bg-red-500 text-white py-2 px-4 rounded-md hover:opacity-90' onClick={() => deleteIncome(income.id)}>Delete</button>
                                     </td>
                                 </tr>
@@ -68,6 +68,7 @@ const Incomes = () => {
                         </tbody>
                     </table>
                 </div>
+                {incomes.length < 1 && <p className='text-gray-500 text-sm mt-5 text-center'>You don't have incomes currenctly</p>}
             </section>
         </>
     )
