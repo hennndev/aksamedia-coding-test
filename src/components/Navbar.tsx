@@ -1,5 +1,5 @@
 import React from 'react'
-import { LuSearch, LuCircleUserRound, LuMoon } from "react-icons/lu";
+import { LuSearch, LuCircleUserRound, LuMoon, LuMail, LuBell } from "react-icons/lu";
 
 
 const Navbar = () => {
@@ -11,6 +11,8 @@ const Navbar = () => {
             </section>
 
             <section className='flexx space-x-5'>
+                <LuMail className='text-xl text-gray-600 cursor-pointer'/>
+                <LuBell className='text-xl text-gray-600 cursor-pointer'/>
                 <LuMoon className='text-xl text-gray-600 cursor-pointer'/>
                 <section className='flexx space-x-2 border-l-2 border-gray-100 pl-3 py-[17px] cursor-pointer'>
                     <p className='text-primary text-[15px]'>Hendra Adri</p>

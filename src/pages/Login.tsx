@@ -1,24 +1,26 @@
 import { useState } from 'react'
 import clsx from 'clsx'
 import { useForm } from 'react-hook-form'
-import { LuMail, LuLock, LuLockOpen } from "react-icons/lu"
-
+import { users_login } from '../data/users'
+import { useNavigate } from 'react-router-dom'
+import { LuCircleUserRound, LuLock, LuLockOpen } from "react-icons/lu"
 
 type FormTypes = {
-    email: string
+    username: string
     password: string
     rememberMe: boolean
 }
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [isFocusEmail, setIsFocusEmail] = useState<boolean>(false)
+    const [isError, setIsError] = useState<string | null>(null)
+    const [isFocusUsername, setIsFocusUsername] = useState<boolean>(false)
     const [isFocusPassword, setIsFocusPassword] = useState<boolean>(false)
     const [showPassword, setShowPassword] = useState<boolean>(false)
 
     const { register, handleSubmit, formState: {errors} } = useForm<FormTypes>({
         defaultValues: {
-            email: "",
+            username: "",
             password: "",
             rememberMe: false
         }
@@ -29,13 +31,27 @@ const Login = () => {
         setIsLoading(true)
         return new Promise((resolve, reject) => {
             setTimeout(() => {
+                const checkEmail = users_login.find(user => user.username === values.username)
+                if(!checkEmail) {
+                    setIsError("Username tidak ditemukan")
+                    reject()
+                } else {
+                    const checkPassword = checkEmail?.password === values.password
+                    if(!checkPassword) {
+                        setIsError("Password salah")
+                        reject()
+                    } else {
+                        setIsError(null)
+                        resolve(true)
+                    }
+                }
                 setIsLoading(false)
             }, 2000);
         })
     }
 
-    const blurEmailHandler = () => setIsFocusEmail(false)
-    const focusEmailHandler = () => setIsFocusEmail(true)
+    const blurUsernameHandler = () => setIsFocusUsername(false)
+    const focusUsernameHandler = () => setIsFocusUsername(true)
 
     const blurPasswordHandler = () => setIsFocusPassword(false)
     const focusPasswordHandler = () => setIsFocusPassword(true)
@@ -44,29 +60,26 @@ const Login = () => {
         <section className="bg-white w-[400px] rounded-2xl shadow-box-primary p-10">
             <section className="text-center">
                 <h1 className='text-2xl text-primary font-bold tracking-tight'>Selamat datang</h1>
-                <p className='text-gray-500 mt-2'>Silahkan isi detailmu untuk login sebagai admin</p>
+                <p className='text-gray-500 mt-2'>Silahkan isi detailmu untuk login</p>
             </section>
             <form className='flex flex-col mt-7' onSubmit={handleSubmit(submitHandler)}>
+                {isError && <p className='mb-3 text-red-500'>{isError}</p>}
                 <section className='flex flex-col mb-3 space-y-1.5'>
-                    <label className='text-primary' htmlFor="email">E-mail address <span className='text-red-500'>*</span></label>
-                    <section className={clsx("flexx border-2 rounded-lg py-2 px-3", isFocusEmail ? "border-2 border-primary" : "border-gray-100")}>
+                    <label className='text-primary' htmlFor="email">Username <span className='text-red-500'>*</span></label>
+                    <section className={clsx("flexx border-2 rounded-lg py-2 px-3", isFocusUsername ? "border-2 border-primary" : "border-gray-100")}>
                         <input 
-                            type="email" 
-                            id='email' 
-                            placeholder='Masukan email anda...' 
+                            type="text" 
+                            id='username' 
+                            placeholder='Masukan username anda...' 
                             className="text-gray-700 border-none outline-none flex-1 mr-2"
-                            onFocus={focusEmailHandler}
-                            {...register("email", {
-                                required: "Kolom email harus diisi",
-                                pattern: {
-                                    value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                                    message: "Email tidak valid"
-                                },
-                                onBlur: blurEmailHandler
+                            onFocus={focusUsernameHandler}
+                            {...register("username", {
+                                required: "Kolom username harus diisi",
+                                onBlur: blurUsernameHandler
                             })}/>    
-                        <LuMail className='text-lg text-gray-500'/>
+                        <LuCircleUserRound className='text-lg text-gray-500'/>
                     </section>
-                    {errors.email && <p className='text-sm text-red-400'>{errors.email.message}</p>}
+                    {errors.username && <p className='text-sm text-red-400'>{errors.username.message}</p>}
                 </section>
                 <section className='flex flex-col mb-3 space-y-1.5'>
                     <label className='text-primary' htmlFor="password">Password <span className='text-red-500'>*</span></label>
