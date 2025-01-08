@@ -10,7 +10,7 @@ export default {
         'poppins': ['Poppins']
       },
       boxShadow: {
-        'login-box': 'rgba(0, 0, 0, 0.04) 0px 3px 5px'
+        'box-primary': 'rgba(0, 0, 0, 0.04) 0px 3px 5px'
       },
       colors: {
         primary: 'var(--color-primary)'

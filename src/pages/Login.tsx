@@ -41,7 +41,7 @@ const Login = () => {
     const focusPasswordHandler = () => setIsFocusPassword(true)
 
     return (
-        <section className="bg-white w-[400px] rounded-2xl shadow-login-box p-10">
+        <section className="bg-white w-[400px] rounded-2xl shadow-box-primary p-10">
             <section className="text-center">
                 <h1 className='text-2xl text-primary font-bold tracking-tight'>Selamat datang</h1>
                 <p className='text-gray-500 mt-2'>Silahkan isi detailmu untuk login sebagai admin</p>

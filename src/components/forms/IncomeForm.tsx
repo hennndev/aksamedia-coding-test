@@ -1,19 +1,22 @@
-import React from 'react'
+import { useState } from 'react'
+import clsx from 'clsx'
+import { v4 as uuid } from "uuid"
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { incomesStore } from '../../store/incomesStore'
 
 type FormTypes = {
     incomeName: string
     incomeType: string
-    incomeAmount?: number
+    incomeAmount: number
     incomeDate: Date
     incomeDescription: string
 }
 
 const IncomeForm = () => {
     const navigate = useNavigate()
-
-    const { register, formState: {errors}, handleSubmit } = useForm<FormTypes>({
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const { register, formState: {errors}, handleSubmit, reset } = useForm<FormTypes>({
         defaultValues: {
             incomeName: "",
             incomeType: "",
@@ -21,9 +24,22 @@ const IncomeForm = () => {
             incomeDescription: ""
         }
     })
+    const { setIncome } = incomesStore()
 
     const submitHandler = (values: FormTypes) => {
-        console.log(values)
+        setIsLoading(true)
+        const newIncome = {
+            id: uuid(),
+            ...values
+        }
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                setIncome(newIncome)
+                reset()
+                navigate("/incomes")
+                resolve(1)
+            }, 2000);
+        })
     }
 
     return (
@@ -34,6 +50,7 @@ const IncomeForm = () => {
                     <input 
                         type="text"
                         id='incomeName'
+                        disabled={isLoading}
                         {...register("incomeName", {
                             required: "Nama pemasukan tidak boleh kosong"
                         })}
@@ -46,16 +63,17 @@ const IncomeForm = () => {
                     <label htmlFor="incomeType" className='text-primary'>Jenis pemasukan</label>
                     <select 
                         id="incomeType" 
+                        disabled={isLoading}
                         {...register("incomeType", {
                             required: "Jenis pemasukan tidak boleh kosong"
                         })}
                         className='border border-[#ccc] rounded-md py-2.5 px-4 outline-none'>
                         <option selected value="">Pilih jenis income</option>
-                        <option value="activeIncome">Pemasukan aktif (gaji, bonus, fee, honor, project based, etc)</option>
-                        <option value="passiveIncome">Pemasukan pasif(saham, royalti, sewa, affiliate, bunga deposito/tabungan, etc)</option>
-                        <option value="businessIncome">Pemasukan bisnis (profit, reseller, kemitraan)</option>
-                        <option value="digitalIncome">Pemasukan digital (NFT, subscription, course, affiliate)</option>
-                        <option value="propertyIncome">Pemasukan properti (sewa apartemen, sewa rumah, sewa kost, sewa kendaraan, sewa barang elektronik)</option>
+                        <option value="Pemasukan aktif">Pemasukan aktif (gaji, bonus, fee, honor, project based, etc)</option>
+                        <option value="Pemasukan pasif">Pemasukan pasif(saham, royalti, sewa, affiliate, bunga deposito/tabungan, etc)</option>
+                        <option value="Pemasukan bisnis">Pemasukan bisnis (profit, reseller, kemitraan)</option>
+                        <option value="Pemasukan digital">Pemasukan digital (NFT, subscription, course, affiliate)</option>
+                        <option value="Pemasukan properti">Pemasukan properti (sewa apartemen, sewa rumah, sewa kost, sewa kendaraan, sewa barang elektronik)</option>
                     </select>
                     {errors.incomeType && <p className='text-red-400 text-sm'>{errors.incomeType.message}</p>}
                 </section>
@@ -64,6 +82,7 @@ const IncomeForm = () => {
                     <label htmlFor="incomeAmount" className='text-primary'>Jumlah pemasukan</label>
                     <input 
                         type="number" 
+                        disabled={isLoading}
                         id='incomeAmount'
                         {...register("incomeAmount", {
                             required: "Jumlah pemasukan tidak boleh kosong"
@@ -77,6 +96,7 @@ const IncomeForm = () => {
                     <label htmlFor="incomeAmount" className='text-primary'>Tanggal pemasukan</label>
                     <input 
                         type="date" 
+                        disabled={isLoading}
                         id='incomeDate'
                         {...register("incomeDate", {
                             required: "Tanggal pemasukan tidak boleh kosong"
@@ -91,6 +111,7 @@ const IncomeForm = () => {
                         id="incomeDescription" 
                         rows={6} 
                         cols={6} 
+                        disabled={isLoading}
                         placeholder='Tulis deskripsi pemasukan disini...' 
                         {...register("incomeDescription", {
                             required: "Deskripsi pemasukan tidak boleh kosong"
@@ -102,14 +123,16 @@ const IncomeForm = () => {
                 <section className='flexx space-x-2'>
                     <button 
                         type='button'
+                        disabled={isLoading}
                         onClick={() => navigate("/incomes")}
-                        className='border-none outline-none cursor-pointer bg-gray-200 rounded-md text-primary py-2 px-4 hover:opacity-90'>
+                        className={clsx("border-none outline-none bg-gray-200 rounded-md text-primary py-2 px-4 hover:opacity-90", isLoading ? "cursor-default" : "cursor-pointer")}>
                         Cancel
                     </button>
                     <button 
                         type='submit'
-                        className='border-none outline-none bg-primary text-white cursor-pointer rounded-md py-2 px-4 hover:opacity-90'>
-                        Submit
+                        disabled={isLoading}
+                        className={clsx("border-none outline-none rounded-md py-2 px-4 hover:opacity-90", isLoading ? "bg-gray-200 text-primary cursor-default" : "bg-primary text-white cursor-pointer")}>
+                        {isLoading ? "Loading..." : "Submit"}
                     </button>
                 </section>
             </form>
