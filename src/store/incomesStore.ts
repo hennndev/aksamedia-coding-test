@@ -6,7 +6,7 @@ type IncomesStoreTypes = {
     setIncome: (income: IncomeTypes) => void
 }
 
-export const useGroupStore = create(
+export const incomesStore = create(
     persist<IncomesStoreTypes>(
         (set, get) => ({
             incomes: [],
