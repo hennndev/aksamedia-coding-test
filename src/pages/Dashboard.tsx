@@ -1,9 +1,11 @@
 import React from 'react'
 
-const Home = () => {
+const Dashboard = () => {
     return (
-        <div>Home</div>
+        <section>
+            Home
+        </section>
     )
 }
 
-export default Home
+export default Dashboard
