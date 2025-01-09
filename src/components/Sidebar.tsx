@@ -1,8 +1,8 @@
-import React from 'react'
 import clsx from 'clsx'
-import { LuOrbit } from "react-icons/lu";
 import { sidebarItems } from '../utils/sidebarItems'
 import { useLocation, useNavigate } from 'react-router-dom'
+// components
+import { LuOrbit } from "react-icons/lu"
 
 const Sidebar = () => {
     const navigate = useNavigate()
@@ -15,10 +15,9 @@ const Sidebar = () => {
                 <LuOrbit className='mr-2 text-2xl'/>
                 Financee
             </h1>
-
             <section className='mt-10 space-y-2 px-5'>
                 {sidebarItems.map(({Icon, ...item}) => (
-                    <section className={clsx("flexx cursor-pointer space-x-2 px-4 py-2 rounded-md hover:bg-gray-100", pathname === item.slug ? "bg-gray-100" : "")} onClick={() => navigate(`/${item.slug}`)}>
+                    <section className={clsx("flexx cursor-pointer space-x-2 px-4 py-2 rounded-md hover:bg-gray-100", pathname === item.slug ? "bg-gray-100" : "")} key={item.id} onClick={() => navigate(`/${item.slug}`)}>
                         <Icon className='text-xl text-gray-500'/>
                         <p className='text-gray-500 font-medium'>{item.name}</p>
                     </section>

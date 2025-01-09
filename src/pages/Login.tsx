@@ -1,7 +1,7 @@
 import { useCookies } from 'react-cookie'
 import { Navigate } from 'react-router-dom'
-import HelmetPage from '../components/HelmetPage'
 // components
+import HelmetPage from '../components/HelmetPage'
 import LoginForm from '../components/forms/LoginForm'
 
 const Login = () => {

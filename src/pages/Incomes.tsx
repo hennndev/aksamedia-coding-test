@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import queryString from 'query-string'
-import PageHeader from '../components/PageHeader'
-import HelmetPage from '../components/HelmetPage'
 import { incomesStore } from '../store/incomesStore'
 import { useNavigate, useLocation } from 'react-router-dom'
+// components
+import PageHeader from '../components/PageHeader'
+import HelmetPage from '../components/HelmetPage'
 import IncomesTable from '../components/tables/IncomesTable'
 
 const Incomes = () => {

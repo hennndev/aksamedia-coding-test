@@ -14,13 +14,13 @@ export const sidebarItems = [
         slug: "incomes",
     },
     {
-        id: 1,
+        id: 3,
         Icon: LuWallet,
         name: "Expenses",
         slug: "expenses",
     },
     {
-        id: 1,
+        id: 4,
         Icon: LuNotebookText,
         name: "Plans",
         slug: "plans",

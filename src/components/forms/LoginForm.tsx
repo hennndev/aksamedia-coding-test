@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { useCookies } from 'react-cookie'
 import { useForm } from 'react-hook-form'
@@ -21,9 +21,10 @@ const LoginForm = () => {
     const [isFocusPassword, setIsFocusPassword] = useState<boolean>(false)
 
     const { setUser } = userStore()
-    const [_, setCookie] = useCookies(['user'])
+    const [, setCookie] = useCookies(['user'])
+    const [cookies, setCookieRememberMe, removeCookie] = useCookies(['rememberMe'])
 
-    const { register, handleSubmit, formState: {errors} } = useForm<FormTypes>({
+    const { register, handleSubmit, formState: {errors}, setValue } = useForm<FormTypes>({
         defaultValues: {
             username: "",
             password: "",
@@ -35,44 +36,59 @@ const LoginForm = () => {
         setIsLoading(true)
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const checkEmail = users_login.find(user => user.username === values.username)
-                if(!checkEmail) {
+                const checkUsername = users_login.find(user => user.username === values.username)
+                if(!checkUsername) {
                     setIsError("Username tidak ditemukan")
                     reject()
                 } else {
-                    const checkPassword = checkEmail?.password === values.password
+                    const checkPassword = checkUsername?.password === values.password
                     if(!checkPassword) {
                         setIsError("Password salah")
                         reject()
                     } else {
                         setIsError(null)
-                        setUser({username: checkEmail.username})
-                        setCookie("user", checkEmail.id, {maxAge: 3600, secure: true})
+                        setUser({username: checkUsername.username})
+                        if(values.rememberMe) {
+                            setCookieRememberMe("rememberMe", checkUsername.username, {maxAge: 604800, secure: true})
+                        } else {
+                            removeCookie("rememberMe")
+                        }
+                        setCookie("user", checkUsername.id, {maxAge: 3600, secure: true})
                         resolve(true)
                     }
                 }
                 setIsLoading(false)
-            }, 2000);
+            }, 2000)
         })
     }
     const showPasswordHandler = (value: boolean) => setShowPassword(value)
+    
     const blurUsernameHandler = () => setIsFocusUsername(false)
     const focusUsernameHandler = () => setIsFocusUsername(true)
+
     const blurPasswordHandler = () => setIsFocusPassword(false)
     const focusPasswordHandler = () => setIsFocusPassword(true)
-    
+
+    useEffect(() => {
+        if(cookies.rememberMe) {
+            setValue("username", cookies.rememberMe)
+            setValue("rememberMe", true)
+        }
+    }, [cookies.rememberMe])
+      
     return (
          <form className='flex flex-col mt-7' onSubmit={handleSubmit(submitHandler)}>
                 {isError && <p className='mb-3 text-red-500'>{isError}</p>}
+                {/* username */}
                 <section className='flex flex-col mb-3 space-y-1.5'>
-                    <label className='text-primary' htmlFor="email">Username <span className='text-red-500'>*</span></label>
+                    <label className='text-primary' htmlFor="username">Username <span className='text-red-500'>*</span></label>
                     <section className={clsx("flexx border-2 rounded-lg py-2 px-3", isFocusUsername ? "border-2 border-primary" : "border-gray-100")}>
                         <input 
                             type="text" 
                             id='username' 
+                            onFocus={focusUsernameHandler}
                             placeholder='Masukan username anda...' 
                             className="text-gray-700 border-none outline-none flex-1 mr-2"
-                            onFocus={focusUsernameHandler}
                             {...register("username", {
                                 required: "Kolom username harus diisi",
                                 onBlur: blurUsernameHandler
@@ -81,14 +97,15 @@ const LoginForm = () => {
                     </section>
                     {errors.username && <p className='text-sm text-red-400'>{errors.username.message}</p>}
                 </section>
+                {/* password */}
                 <section className='flex flex-col mb-3 space-y-1.5'>
                     <label className='text-primary' htmlFor="password">Password <span className='text-red-500'>*</span></label>
                     <section className={clsx("flexx border-2 rounded-lg py-2 px-3", isFocusPassword ? "border-2 border-primary" : "border-gray-100")}>
                         <input 
                             type={showPassword ? "text" : "password"} 
                             id='password' 
-                            placeholder='Masukan password anda...'
                             onFocus={focusPasswordHandler} 
+                            placeholder='Masukan password anda...'
                             className='text-gray-700 border-none outline-none flex-1 mr-2'
                             {...register("password", {
                                 required: "Kolom password harus diisi",
@@ -106,6 +123,7 @@ const LoginForm = () => {
                     </section>
                     {errors.password && <p className='text-sm text-red-400'>{errors.password.message}</p>}
                 </section>
+                {/* remember me */}
                 <section className='flexx space-x-2 mb-5'>
                     <input 
                         id='rememberMe' 

@@ -9,7 +9,7 @@ type PropsTypes = {
 
 const ModalConfirm = ({modalTitle, modalType, closeHandler, submitHandler}: PropsTypes) => {
     return (
-        <section className='fixed top-0 right-0 left-0 bottom-0 w-full h-full bg-[rgba(0,0,0,0.3)]'>
+        <section className='fixed z-[999] top-0 right-0 left-0 bottom-0 w-full h-full bg-[rgba(0,0,0,0.3)]'>
             <section className='w-full h-full flex-center'>
                 <section className='bg-white w-[450px] rounded-lg p-8'>
                     <h1 className='text-lg text-primary'>{modalTitle}</h1>

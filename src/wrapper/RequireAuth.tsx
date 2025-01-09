@@ -1,5 +1,5 @@
-import { Navigate, Outlet } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
+import { Navigate, Outlet } from 'react-router-dom'
 
 const RequireAuth = () => {
     const [cookies] = useCookies(['user']);

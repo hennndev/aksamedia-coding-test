@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { v4 as uuid } from "uuid"
 import { useForm } from 'react-hook-form'
-import ModalConfirm from '../ModalConfirm'
 import { useNavigate, useParams } from 'react-router-dom'
 import { incomesStore } from '../../store/incomesStore'
+// components
+import ModalConfirm from '../ModalConfirm'
 
 type FormTypes = {
     incomeName: string
@@ -86,7 +87,7 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
 
     return (
         <section className='bg-white rounded-lg p-4 shadow-sm'>
-            {openModal && (
+            {openModal && isEdit && (
                 <ModalConfirm 
                     modalTitle='Your data income will change permanently, are you sure want to continue?' 
                     modalType='edit' 
@@ -97,7 +98,7 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
                     }}
                 />
             )}
-            <form onSubmit={handleSubmit(openModalEditHandler)}>
+            <form onSubmit={handleSubmit(isEdit ? openModalEditHandler : submitHandler)}>
                 <section className='flex flex-col space-y-2 mb-4'>
                     <label htmlFor="incomeName" className='text-primary'>Nama pemasukan</label>
                     <input 

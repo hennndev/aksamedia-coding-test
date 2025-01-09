@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import queryString from 'query-string'
-import { LuSearch, LuX } from 'react-icons/lu'
 import { useLocation } from 'react-router-dom'
 import {DebounceInput} from 'react-debounce-input'
 import { useQueryParams } from '../hooks/useQueryParams'
+// components
+import { LuSearch, LuX } from 'react-icons/lu'
 
 const SearchInput = () => {
     const location = useLocation()

@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
 import { rupiahFormat } from '../../utils/rupiahCurrency'
+// components
 import ModalConfirm from '../ModalConfirm'
 
 type PropsTypes = {
@@ -15,7 +17,6 @@ const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
     const openModalDeleteHandler = (id: string) => {
         setOpenModal(id)
     }
-
     return (
         <section className="relative overflow-x-auto rounded-xl shadow-box-primary">
             {openModal && (
@@ -53,7 +54,7 @@ const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
                 </thead>
                 <tbody>
                     {incomesData.map((income: IncomeTypes, index) => (
-                        <tr className="bg-white border-b">
+                        <tr className="bg-white border-b" key={income.id}>
                             <td className="px-6 py-4">
                                 {index + 1}
                             </td>
@@ -67,7 +68,7 @@ const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
                                 {rupiahFormat(income.incomeAmount)}
                             </td>
                             <td className="px-6 py-4">
-                                {new Date(income.incomeDate).toDateString()}
+                                {moment(income.incomeDate).add(10, 'days').calendar()}
                             </td>
                             <td className="px-6 py-4 text-right">
                                 <button className='border-none outline-none cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-md mr-2 hover:opacity-90' onClick={() => navigate(`/incomes/edit-income/${income.id}`)}>Edit</button>

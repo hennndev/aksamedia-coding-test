@@ -1,4 +1,5 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async'
+
 type PropsTypes = {
     title: string
     content: string
