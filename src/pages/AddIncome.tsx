@@ -11,7 +11,6 @@ const AddIncome = () => {
                     Back to Incomes
                 </button>
             </PageHeader>
-
             <section className='p-6'>
                 <IncomeForm/>
             </section>

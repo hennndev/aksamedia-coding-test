@@ -1,5 +1,6 @@
 import { useCookies } from 'react-cookie'
 import { Navigate } from 'react-router-dom'
+// components
 import LoginForm from '../components/forms/LoginForm'
 
 const Login = () => {

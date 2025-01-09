@@ -3,7 +3,7 @@ import queryString from 'query-string'
 import PageHeader from '../components/PageHeader'
 import { incomesStore } from '../store/incomesStore'
 import { useNavigate, useLocation } from 'react-router-dom'
-import IncomesTable from '../components/tables/incomesTable'
+import IncomesTable from '../components/tables/IncomesTable'
 
 const Incomes = () => {
     const navigate = useNavigate()

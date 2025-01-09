@@ -1,16 +1,30 @@
-import Login from './pages/Login'
-import AuthWrapper from './wrapper/AuthWrapper'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useCookies } from 'react-cookie'
+import { userStore } from './store/userStore'
 import MainWrapper from './wrapper/MainWrapper'
-import Dashboard from './pages/Dashboard'
+import AuthWrapper from './wrapper/AuthWrapper'
+import RequireAuth from './wrapper/RequireAuth'
+import { Routes, Route, Navigate } from 'react-router-dom'
+// pages
+import Login from './pages/Login'
+import Plans from './pages/Plans'
 import Incomes from './pages/Incomes'
 import Expenses from './pages/Expenses'
-import Plans from './pages/Plans'
+import Dashboard from './pages/Dashboard'
 import AddIncome from './pages/AddIncome'
 import EditIncome from './pages/EditIncome'
-import RequireAuth from './components/RequireAuth'
 
 const App = () => {
+    const [cookies] = useCookies(['user'])
+    const { setUser } = userStore()
+
+    useEffect(() => {
+        if(!cookies.user) {
+            setUser(null)
+            localStorage.removeItem("user")
+        }
+    }, [cookies.user])
+    
     return (
         <Routes>     
             <Route element={<AuthWrapper/>}>

@@ -3,10 +3,9 @@ import clsx from 'clsx'
 import { useCookies } from 'react-cookie'
 import { useForm } from 'react-hook-form'
 import { users_login } from '../../data/users'
-import { useNavigate } from 'react-router-dom'
 import { userStore } from '../../store/userStore'
+// components
 import { LuCircleUserRound, LuLock, LuLockOpen } from "react-icons/lu"
-
 
 type FormTypes = {
     username: string
@@ -15,14 +14,14 @@ type FormTypes = {
 }
 
 const LoginForm = () => {
-    const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isError, setIsError] = useState<string | null>(null)
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [isFocusUsername, setIsFocusUsername] = useState<boolean>(false)
     const [isFocusPassword, setIsFocusPassword] = useState<boolean>(false)
-    const [_, setCookie] = useCookies(['user'])
+
     const { setUser } = userStore()
+    const [_, setCookie] = useCookies(['user'])
 
     const { register, handleSubmit, formState: {errors} } = useForm<FormTypes>({
         defaultValues: {
@@ -32,7 +31,6 @@ const LoginForm = () => {
         }
     })
 
-    const showPasswordHandler = (value: boolean) => setShowPassword(value)
     const submitHandler = (values: FormTypes) => {
         setIsLoading(true)
         return new Promise((resolve, reject) => {
@@ -57,10 +55,9 @@ const LoginForm = () => {
             }, 2000);
         })
     }
-
+    const showPasswordHandler = (value: boolean) => setShowPassword(value)
     const blurUsernameHandler = () => setIsFocusUsername(false)
     const focusUsernameHandler = () => setIsFocusUsername(true)
-
     const blurPasswordHandler = () => setIsFocusPassword(false)
     const focusPasswordHandler = () => setIsFocusPassword(true)
     

@@ -3,17 +3,17 @@ import { persist } from "zustand/middleware"
 
 type UserStoreTypes = {
     user: UserTypes | null
-    setUser: (user: UserTypes) => void
+    setUser: (user: UserTypes | null) => void
 }
 
 export const userStore = create(
     persist<UserStoreTypes>(
         (set) => ({
             user: null,
-            setUser: (user: UserTypes) => set({user})
+            setUser: (user: UserTypes | null) => set({user})
         }),
         {
-            name: 'incomes', 
+            name: 'user ', 
         },
     ),
 )

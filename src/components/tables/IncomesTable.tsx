@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
-import queryString from 'query-string'
-import { incomesStore } from '../../store/incomesStore'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { rupiahFormat } from '../../utils/rupiahCurrency'
-import { useNavigate, useLocation } from 'react-router-dom'
+import ModalConfirm from '../ModalConfirm'
 
 type PropsTypes = {
     incomesData: IncomesTypes
@@ -11,8 +10,24 @@ type PropsTypes = {
 
 const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
     const navigate = useNavigate()
+    const [openModal, setOpenModal] = useState<null | string>(null)
+   
+    const openModalDeleteHandler = (id: string) => {
+        setOpenModal(id)
+    }
+
     return (
         <section className="relative overflow-x-auto rounded-xl shadow-box-primary">
+            {openModal && (
+                <ModalConfirm 
+                    modalType='delete' 
+                    modalTitle='Are you sure want to delete this income?' 
+                    closeHandler={() => setOpenModal(null)}
+                    submitHandler={() => {
+                        deleteHandler(openModal)
+                        setOpenModal(null)
+                    }}/>
+            )}
             <table className="w-full text-sm text-left bg-white">
                 <thead className="text-sm text-primary border-b-2 border-gray-100">
                     <tr>
@@ -56,7 +71,7 @@ const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
                             </td>
                             <td className="px-6 py-4 text-right">
                                 <button className='border-none outline-none cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-md mr-2 hover:opacity-90' onClick={() => navigate(`/incomes/edit-income/${income.id}`)}>Edit</button>
-                                <button className='border-none outline-none cursor-pointer bg-red-500 text-white py-2 px-4 rounded-md hover:opacity-90' onClick={() => deleteHandler(income.id)}>Delete</button>
+                                <button className='border-none outline-none cursor-pointer bg-red-500 text-white py-2 px-4 rounded-md hover:opacity-90' onClick={() => openModalDeleteHandler(income.id)}>Delete</button>
                             </td>
                         </tr>
                     ))}

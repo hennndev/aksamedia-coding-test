@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { v4 as uuid } from "uuid"
 import { useForm } from 'react-hook-form'
+import ModalConfirm from '../ModalConfirm'
 import { useNavigate, useParams } from 'react-router-dom'
 import { incomesStore } from '../../store/incomesStore'
 
@@ -14,12 +15,13 @@ type FormTypes = {
 }
 
 type PropsTypes = {
-    isEdit: boolean
+    isEdit?: boolean
 }
 
 const IncomeForm = ({isEdit}: PropsTypes) => {
-    const navigate = useNavigate()
     const params = useParams()
+    const navigate = useNavigate()
+    const [openModal, setOpenModal] = useState<null | FormTypes>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const { register, formState: {errors}, handleSubmit, reset, setValue } = useForm<FormTypes>({
         defaultValues: {
@@ -30,6 +32,10 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
         }
     })
     const { incomes, setIncome, setIncomes } = incomesStore()
+
+    const openModalEditHandler = (values: FormTypes) => {
+        setOpenModal(values)
+    }
 
     const submitHandler = (values: FormTypes) => {
         setIsLoading(true)
@@ -80,7 +86,18 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
 
     return (
         <section className='bg-white rounded-lg p-4 shadow-sm'>
-            <form onSubmit={handleSubmit(submitHandler)}>
+            {openModal && (
+                <ModalConfirm 
+                    modalTitle='Your data income will change permanently, are you sure want to continue?' 
+                    modalType='edit' 
+                    closeHandler={() => setOpenModal(null)}
+                    submitHandler={() => {
+                        submitHandler(openModal as FormTypes)
+                        setOpenModal(null)
+                    }}
+                />
+            )}
+            <form onSubmit={handleSubmit(openModalEditHandler)}>
                 <section className='flex flex-col space-y-2 mb-4'>
                     <label htmlFor="incomeName" className='text-primary'>Nama pemasukan</label>
                     <input 
