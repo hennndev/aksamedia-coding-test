@@ -10,3 +10,9 @@ interface IncomeTypes {
     incomeDate: Date
     incomeDescription: string
 }
+
+
+
+interface UserTypes {
+    username: string
+}

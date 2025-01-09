@@ -8,7 +8,7 @@ import IncomesTable from '../components/tables/incomesTable'
 const Incomes = () => {
     const navigate = useNavigate()
     const location = useLocation()
-    const { incomes } = incomesStore()
+    const { incomes, deleteIncome } = incomesStore()
     const [incomesData, setIncomesData] = useState<IncomesTypes>(incomes)
     const queryStr = queryString.parse(location.search)
 
@@ -21,6 +21,12 @@ const Incomes = () => {
             setIncomesData(incomes)
         }
     }, [queryStr.q])
+
+    const deleteHandler = (id: string) => {
+        deleteIncome(id)
+        const updatedIncomes = incomesData.filter((income: IncomeTypes) => income.id !== id)
+        setIncomesData(updatedIncomes)
+    }
     
     return (
         <>
@@ -30,7 +36,7 @@ const Incomes = () => {
                 </button>
             </PageHeader>
             <section className='p-6'>
-                <IncomesTable incomesData={incomesData}/>
+                <IncomesTable incomesData={incomesData} deleteHandler={deleteHandler}/>
                 {incomes.length < 1 && <p className='text-gray-500 text-sm mt-5 text-center'>You don't have incomes currenctly</p>}
             </section>
         </>
