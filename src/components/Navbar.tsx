@@ -1,15 +1,11 @@
-import React from 'react'
-import { LuSearch, LuCircleUserRound, LuMoon, LuMail, LuBell } from "react-icons/lu";
+import SearchInput from './SearchInput';
+import { LuCircleUserRound, LuMoon, LuMail, LuBell } from "react-icons/lu";
 
 
 const Navbar = () => {
     return (
         <header className='flex-between bg-white px-4'>
-            <section className='flexx space-x-2 w-[600px]'>
-                <LuSearch className='text-gray-600 text-lg mr-1'/>
-                <input type="text" placeholder='Search anything...' className='flex-1 outline-none placeholder:text-gray-500 text-gray-700 text-[15px]'/>
-            </section>
-
+            <SearchInput/>
             <section className='flexx space-x-5'>
                 <LuMail className='text-xl text-gray-600 cursor-pointer'/>
                 <LuBell className='text-xl text-gray-600 cursor-pointer'/>
