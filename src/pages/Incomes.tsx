@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import queryString from 'query-string'
 import PageHeader from '../components/PageHeader'
+import HelmetPage from '../components/HelmetPage'
 import { incomesStore } from '../store/incomesStore'
 import { useNavigate, useLocation } from 'react-router-dom'
 import IncomesTable from '../components/tables/IncomesTable'
@@ -30,6 +31,7 @@ const Incomes = () => {
     
     return (
         <>
+            <HelmetPage title='Incomes' content='Incomes page'/>
             <PageHeader pageTitle='Incomes' isTables>
                 <button className='border border-gray-200 rounded-md text-white text-sm py-2 px-4 bg-primary hover:opacity-90' onClick={() => navigate("/incomes/add-income")}>
                     Add new income
