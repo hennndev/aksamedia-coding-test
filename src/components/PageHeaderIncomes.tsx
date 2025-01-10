@@ -19,7 +19,7 @@ const PageHeaderIncomes = () => {
                 openModalSortHandler={() => setOpenModalSort(true)}
                 openModalFilterHandler={() => setOpenModalFilter(true)}/>
             <button className='rounded-md text-white text-sm py-2 px-4 bg-primary dark:bg-[#222] hover:opacity-90' onClick={() => navigate("/incomes/add-income")}>
-                Add new income
+                Add income
             </button>
         </PageHeader>
     )
