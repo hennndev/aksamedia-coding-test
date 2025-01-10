@@ -18,7 +18,7 @@ const ProfileDropdown = () => {
         setUser(null)
     } 
     return (
-        <section className='relative flexx space-x-2 border-l-2 border-gray-100 pl-3 py-[17px] cursor-pointer' onClick={() => setIsDropdown(!isDropdown)}>
+        <section className='relative flexx space-x-2 border-l-2 border-gray-100 dark:border-gray-700 pl-3 py-[17px] cursor-pointer' onClick={() => setIsDropdown(!isDropdown)}>
             {/* modal profile */}
             {openModalProfile && (
                 <ModalProfile closeHandler={() => setOpenModalProfile(false)}/>
@@ -28,16 +28,16 @@ const ProfileDropdown = () => {
                 <ModalEditProfile closeHandler={() => setOpenModalEditProfile(false)}/>
             )}
 
-            <p className='text-primary text-[15px]'>
+            <p className='text-primary dark:text-gray-200 text-[15px]'>
                 {user?.username}
             </p>
-            <LuCircleUserRound className='text-xl text-gray-600'/>
+            <LuCircleUserRound className='text-xl text-gray-600 dark:text-gray-300'/>
             {isDropdown && (
-                <section className='absolute w-[150px] z-50 border border-gray-400 bg-white top-14 right-0 rounded-xl py-4 px-2'>
+                <section className='absolute w-[150px] z-50 border border-gray-400 dark:border-gray-700 bg-white dark:bg-[#222] top-14 right-0 rounded-xl py-4 px-2'>
                     <section className='flex flex-col'>
-                        <p className='text-primary py-1.5 px-4 rounded-lg hover:bg-gray-100' onClick={() => setOpenModalProfile(true)}>My Profile</p>
-                        <p className='text-primary py-1.5 px-4 rounded-lg hover:bg-gray-100' onClick={() => setOpenModalEditProfile(true)}>Edit Profile</p>
-                        <p className='text-primary py-1.5 px-4 rounded-lg hover:bg-gray-100' onClick={logoutHandler}>Logout</p>
+                        <p className='text-primary dark:text-gray-100 py-1.5 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600' onClick={() => setOpenModalProfile(true)}>My Profile</p>
+                        <p className='text-primary dark:text-gray-100 py-1.5 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600' onClick={() => setOpenModalEditProfile(true)}>Edit Profile</p>
+                        <p className='text-primary dark:text-gray-100 py-1.5 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600' onClick={logoutHandler}>Logout</p>
                     </section>
                 </section>
             )}

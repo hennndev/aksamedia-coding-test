@@ -1,10 +1,11 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import ModalBackdrop from './ModalBackdrop'
-import queryString from 'query-string'
-import { useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import moment from 'moment'
+import queryString from 'query-string'
+import { useForm } from 'react-hook-form'
+import { useLocation } from 'react-router-dom'
 import { useQueryParams } from '../../hooks/useQueryParams'
+// components
+import ModalBackdrop from './ModalBackdrop'
 
 type PropsTypes = {
     closeModalHandler: () => void
@@ -14,23 +15,17 @@ type FormTypes = {
     incomeType: string
     minimumIncomeAmount: number
     maximumIncomeAmount: number
-    incomeDateFrom: Date
-    incomeDateTo: Date
+    incomeDateFrom: Date | string
+    incomeDateTo: Date | string
 }
 
 const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
     const location = useLocation()
     const queryStr = queryString.parse(location.search)
-    const { register, handleSubmit, formState: {errors}, reset} = useForm<FormTypes>({
-        defaultValues: {
-            incomeType: "",
-            minimumIncomeAmount: undefined,
-            maximumIncomeAmount: undefined,
-            incomeDateFrom: undefined,
-            incomeDateTo: undefined
-        }
-    }) 
+    const { register, handleSubmit, reset, setValue, watch } = useForm<FormTypes>() 
     const { setSearchParams, newQueryParameters, handleSetQueries } = useQueryParams()
+
+    console.log(watch("incomeDateTo"))
 
     const submitHandler = (values: FormTypes) => {
         handleSetQueries(queryStr)
@@ -68,7 +63,6 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
         } else {
             newQueryParameters.delete("incomeDateTo")
         }
-
         setSearchParams(newQueryParameters)
         closeModalHandler()
     }
@@ -79,18 +73,39 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
         closeModalHandler()
     }
 
+    useEffect(() => {
+        if(queryStr.incomeType) {
+            const incomeType = queryStr.incomeType as string
+            setValue("incomeType", incomeType.replace("-", " "))
+        } 
+        if(queryStr.minimumIncomeAmount) {
+            setValue("minimumIncomeAmount", +queryStr.minimumIncomeAmount)
+        }
+        if(queryStr.maximumIncomeAmount) {
+            setValue("maximumIncomeAmount", +queryStr.maximumIncomeAmount)
+        }
+        if(queryStr.incomeDateFrom) {
+            setValue("incomeDateFrom", moment(queryStr.incomeDateFrom as string, "DD-MM-YYYY").format('YYYY-MM-DD'))
+        }
+        if(queryStr.incomeDateTo) {
+            console.log(queryStr)
+            setValue("incomeDateTo", moment(queryStr.incomeDateTo as string, "DD-MM-YYYY").format('YYYY-MM-DD'))
+        }
+    }, [location.search])
+    
+
     return (
         <ModalBackdrop>
-            <section className='bg-white max-w-[600px] rounded-lg p-8'>
-                <h1 className='text-xl text-primary mb-5'>Filter Incomes</h1>
+            <section className='bg-white dark:bg-primary     max-w-[600px] rounded-lg p-8'>
+                <h1 className='text-xl text-primary dark:text-gray-100 mb-5'>Filter Incomes</h1>
                 <form onSubmit={handleSubmit(submitHandler)} className='mt-2'>
                     <section className='flex flex-col space-y-2 mb-4'>
-                        <label className='text-primary'>Jenis pemasukan</label>
+                        <label className='text-primary dark:text-gray-100'>Jenis pemasukan</label>
                         <select 
                             {...register("incomeType", {
                                 required: false
                             })}
-                            className='border border-[#ccc] rounded-md py-2.5 px-4 outline-none'>
+                            className='border border-[#ccc] dark:border-gray-600 dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'>
                             <option selected value="">Pilih jenis income</option>
                             <option value="Pemasukan aktif">Pemasukan aktif (gaji, bonus, fee, honor, project based, etc)</option>
                             <option value="Pemasukan pasif">Pemasukan pasif(saham, royalti, sewa, affiliate, bunga deposito/tabungan, etc)</option>
@@ -101,7 +116,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
                     </section>
                     {/* jumlah pemasukan */}
                     <section className='flex flex-col space-y-2 mb-4'>
-                        <label className='text-primary'>Jumlah pemasukan</label>
+                        <label className='text-primary dark:text-gray-100'>Jumlah pemasukan</label>
                         <section className='w-full flexx space-x-3'>
                             <input 
                                 type="number" 
@@ -109,7 +124,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
                                     required: false,
                                 })}
                                 placeholder='Input minimum amount'
-                                className='w-full border border-[#ccc] rounded-md py-2.5 px-4 outline-none'/>
+                                className='w-full border border-[#ccc] dark:border-gray-600 dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'/>
                             <span>-</span>
                             <input 
                                 type="number" 
@@ -117,35 +132,35 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
                                     required: false,
                                 })}
                                 placeholder='Input maximum amount'
-                                className='w-full border border-[#ccc] rounded-md py-2.5 px-4 outline-none'/>
+                                className='w-full border border-[#ccc] dark:border-gray-600 dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'/>
                         </section>      
-                        {errors.minimumIncomeAmount && <p className='text-red-500 text-sm'>{errors.minimumIncomeAmount.message}</p>}
-                        {errors.maximumIncomeAmount && <p className='text-red-500 text-sm'>{errors.maximumIncomeAmount.message}</p>}
                     </section>
                     {/* tanggal pemasukan */}
                     <section className='flex flex-col space-y-2 mb-4'>
-                        <label className='text-primary'>Tanggal pemasukan</label>
+                        <label className='text-primary dark:text-gray-100'>Tanggal pemasukan</label>
                         <section className='w-full flexx space-x-3'>
+                            {/* tanggal awal */}
                             <input 
                                 type="date" 
                                 {...register("incomeDateFrom", {
                                     required: false
                                 })}
-                                className='w-full border border-[#ccc] rounded-md py-2.5 px-4 outline-none'/>
+                                className='w-full border border-[#ccc] dark:border-gray-600 dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'/>
                             <span>-</span>
+                            {/* tanggal akhir */}
                             <input 
                                 type="date" 
                                 {...register("incomeDateTo", {
                                     required: false
                                 })}
-                                className='w-full border border-[#ccc] rounded-md py-2.5 px-4 outline-none'/>
+                                className='w-full border border-[#ccc] dark:border-gray-600 dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'/>
                         </section>
                     </section>
 
                     <section className='flexx space-x-2 mt-5'>
-                        <button type='button' className='border-none outline-none rounded-md bg-gray-500 py-2 px-4 text-white hover:opacity-90' onClick={closeModalHandler}>Close</button>
-                        <button type='button' className='border-none outline-none rounded-md bg-red-500 py-2 px-4 text-white hover:opacity-90' onClick={resetHandler}>Reset</button>
-                        <button type='submit' className='border-none outline-none rounded-md py-2 px-4 text-white bg-primary hover:opacity-90'>
+                        <button type='button' className='border-none outline-none rounded-md bg-gray-500 dark:bg-gray-600 py-2 px-4 text-white hover:opacity-90' onClick={closeModalHandler}>Close</button>
+                        <button type='button' className='border-none outline-none rounded-md bg-red-500 dark:bg-red-700 py-2 px-4 text-white hover:opacity-90' onClick={resetHandler}>Reset</button>
+                        <button type='submit' className='border-none outline-none rounded-md py-2 px-4 text-white bg-primary dark:bg-[#222] hover:opacity-90'>
                             Filter Incomes
                         </button>
                     </section>

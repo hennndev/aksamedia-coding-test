@@ -29,8 +29,8 @@ const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
                         setOpenModal(null)
                     }}/>
             )}
-            <table className="w-full text-sm text-left bg-white">
-                <thead className="text-sm text-primary border-b-2 border-gray-100">
+            <table className="w-full text-sm text-left bg-white dark:bg-primary">
+                <thead className="text-sm text-primary dark:text-gray-100 border-b-2 border-gray-100 dark:border-gray-700">
                     <tr>
                         <th scope="col" className="px-6 py-3 font-medium">
                             No
@@ -54,7 +54,7 @@ const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
                 </thead>
                 <tbody>
                     {incomesData.map((income: IncomeTypes, index) => (
-                        <tr className="bg-white border-b" key={income.id}>
+                        <tr className="border-b dark:border-gray-700 text-primary dark:text-gray-100" key={income.id}>
                             <td className="px-6 py-4">
                                 {index + 1}
                             </td>
@@ -71,8 +71,8 @@ const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
                                 {moment(income.incomeDate).format("DD-MM-YYYY")}
                             </td>
                             <td className="px-6 py-4 text-right">
-                                <button className='border-none outline-none cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-md mr-2 hover:opacity-90' onClick={() => navigate(`/incomes/edit-income/${income.id}`)}>Edit</button>
-                                <button className='border-none outline-none cursor-pointer bg-red-500 text-white py-2 px-4 rounded-md hover:opacity-90' onClick={() => openModalDeleteHandler(income.id)}>Delete</button>
+                                <button className='border-none outline-none cursor-pointer bg-blue-500 dark:bg-blue-700 text-white py-2 px-4 rounded-md mr-2 hover:opacity-90' onClick={() => navigate(`/incomes/edit-income/${income.id}`)}>Edit</button>
+                                <button className='border-none outline-none cursor-pointer bg-red-500 dark:bg-red-700 text-white py-2 px-4 rounded-md hover:opacity-90' onClick={() => openModalDeleteHandler(income.id)}>Delete</button>
                             </td>
                         </tr>
                     ))}

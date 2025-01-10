@@ -10,7 +10,7 @@ const EditIncome = () => {
         <>
             <HelmetPage title='Edit Income' content='Edit income page'/>
             <PageHeader pageTitle='Edit Income'>
-                <button className='border border-gray-200 rounded-md text-white text-sm py-2 px-4 bg-primary hover:opacity-90' onClick={() => navigate("/incomes")}>
+                <button className='rounded-md text-white text-sm py-2 px-4 bg-gray-500 dark:bg-gray-600 hover:opacity-90' onClick={() => navigate("/incomes")}>
                     Back to Incomes
                 </button>
             </PageHeader>

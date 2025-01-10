@@ -88,7 +88,7 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
     console.log(errors)
 
     return (
-        <section className='bg-white rounded-lg p-4 shadow-sm'>
+        <section className='bg-white dark:bg-primary rounded-lg p-4 shadow-sm'>
             {openModal && isEdit && (
                 <ModalConfirm 
                     modalTitle='Your data income will change permanently, are you sure want to continue?' 
@@ -102,7 +102,7 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
             )}
             <form onSubmit={handleSubmit(isEdit ? openModalEditHandler : submitHandler)}>
                 <section className='flex flex-col space-y-2 mb-4'>
-                    <label htmlFor="incomeName" className='text-primary'>Nama pemasukan</label>
+                    <label htmlFor="incomeName" className='text-primary dark:text-gray-100'>Nama pemasukan</label>
                     <input 
                         type="text"
                         id='incomeName'
@@ -111,19 +111,19 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
                             required: "Nama pemasukan tidak boleh kosong"
                         })}
                         placeholder='Tulis nama pemasukan disini...' 
-                        className='border border-[#ccc] rounded-md py-2.5 px-4 outline-none'/>
+                        className='border border-[#ccc] dark:border-gray-600 text-primary dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'/>
                     {errors.incomeName && <p className='text-red-400 text-sm'>{errors.incomeName.message}</p>}
                 </section>
 
                 <section className='flex flex-col space-y-2 mb-4'>
-                    <label htmlFor="incomeType" className='text-primary'>Jenis pemasukan</label>
+                    <label htmlFor="incomeType" className='text-primary dark:text-gray-100'>Jenis pemasukan</label>
                     <select 
                         id="incomeType" 
                         disabled={isLoading}
                         {...register("incomeType", {
                             required: "Jenis pemasukan tidak boleh kosong"
                         })}
-                        className='border border-[#ccc] rounded-md py-2.5 px-4 outline-none'>
+                        className='border border-[#ccc] dark:border-gray-600 text-primary dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'>
                         <option selected value="">Pilih jenis income</option>
                         <option value="Pemasukan aktif">Pemasukan aktif (gaji, bonus, fee, honor, project based, etc)</option>
                         <option value="Pemasukan pasif">Pemasukan pasif(saham, royalti, sewa, affiliate, bunga deposito/tabungan, etc)</option>
@@ -135,7 +135,7 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
                 </section>
 
                 <section className='flex flex-col space-y-2 mb-4'>
-                    <label htmlFor="incomeAmount" className='text-primary'>Jumlah pemasukan</label>
+                    <label htmlFor="incomeAmount" className='text-primary dark:text-gray-100'>Jumlah pemasukan</label>
                     <input 
                         type="number" 
                         disabled={isLoading}
@@ -144,12 +144,12 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
                             required: "Jumlah pemasukan tidak boleh kosong"
                         })}
                         placeholder='Tulis jumlah pemasukan disini...' 
-                        className='border border-[#ccc] rounded-md py-2.5 px-4 outline-none'/>
+                        className='border border-[#ccc] dark:border-gray-600 text-primary dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'/>
                     {errors.incomeAmount && <p className='text-red-400 text-sm'>{errors.incomeAmount.message}</p>}
                 </section>
 
                 <section className='flex flex-col space-y-2 mb-4'>
-                    <label htmlFor="incomeDate" className='text-primary'>Tanggal pemasukan</label>
+                    <label htmlFor="incomeDate" className='text-primary dark:text-gray-100'>Tanggal pemasukan</label>
                     <input 
                         type="date" 
                         disabled={isLoading}
@@ -157,15 +157,15 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
                         {...register("incomeDate", {
                             required: "Tanggal pemasukan tidak boleh kosong",
                             validate: (value: Date) => {
-                                return new Date(value).getTime() < new Date().getTime() || "Maksimal tanggal yang bisa di set adalah hari ini"
+                                return moment(value).startOf("day") <= moment(new Date()).startOf("day") || "Maksimal tanggal yang bisa di set adalah hari ini"
                             }
                         })}
-                        className='border border-[#ccc] rounded-md py-2.5 px-4 outline-none'/>
+                        className='border border-[#ccc] dark:border-gray-600 text-primary dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'/>
                     {errors.incomeDate && <p className='text-red-400 text-sm'>{errors.incomeDate.message}</p>}
                 </section>
 
                 <section className='flex flex-col space-y-2 mb-4'>
-                    <label htmlFor="incomeDescription" className='text-primary'>Deskripsi pemasukan</label>
+                    <label htmlFor="incomeDescription" className='text-primary dark:text-gray-100'>Deskripsi pemasukan</label>
                     <textarea 
                         id="incomeDescription" 
                         rows={6} 
@@ -175,7 +175,7 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
                         {...register("incomeDescription", {
                             required: "Deskripsi pemasukan tidak boleh kosong"
                         })}
-                        className='border border-[#ccc] rounded-md py-2.5 px-4 outline-none'></textarea>
+                        className='border border-[#ccc] dark:border-gray-600 text-primary dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'></textarea>
                     {errors.incomeDescription && <p className='text-red-400 text-sm'>{errors.incomeDescription.message}</p>}
                 </section>
 
@@ -184,13 +184,13 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
                         type='button'
                         disabled={isLoading}
                         onClick={() => navigate("/incomes")}
-                        className={clsx("border-none outline-none bg-gray-200 rounded-md text-primary py-2 px-4 hover:opacity-90", isLoading ? "cursor-default" : "cursor-pointer")}>
+                        className={clsx("border-none outline-none bg-gray-200 dark:bg-gray-600 rounded-md text-primary dark:text-white py-2 px-4 hover:opacity-90", isLoading ? "cursor-default" : "cursor-pointer")}>
                         Cancel
                     </button>
                     <button 
                         type='submit'
                         disabled={isLoading}
-                        className={clsx("border-none outline-none rounded-md py-2 px-4 hover:opacity-90", isLoading ? "bg-gray-200 text-primary cursor-default" : "bg-primary text-white cursor-pointer")}>
+                        className={clsx("border-none outline-none rounded-md py-2 px-4 hover:opacity-90", isLoading ? "bg-gray-500 text-primary cursor-default" : "bg-primary dark:bg-[#222] text-white cursor-pointer")}>
                         {isLoading ? "Loading..." : "Submit"}
                     </button>
                 </section>

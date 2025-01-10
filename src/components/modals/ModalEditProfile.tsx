@@ -44,8 +44,8 @@ const ModalEditProfile = ({closeHandler}: PropsTypes) => {
     
     return (
         <ModalBackdrop>
-            <section className='bg-white w-[450px] rounded-lg p-8'>
-                <h1 className='text-lg text-primary'>Edit Profile</h1>
+            <section className='bg-white dark:bg-primary w-[450px] rounded-lg p-8'>
+                <h1 className='text-lg text-primary dark:text-gray-100'>Edit Profile</h1>
                 <form onSubmit={handleSubmit(submitHandler)}>
                     <section className="w-full mt-3">
                         <input 
@@ -56,19 +56,19 @@ const ModalEditProfile = ({closeHandler}: PropsTypes) => {
                                 required: "Username tidak boleh kosong"
                             })}
                             placeholder='Tulis username disini...' 
-                            className='border border-[#ccc] w-full rounded-md py-2.5 px-4 outline-none'/>
+                            className='border border-[#ccc] dark:border-gray-600 bg-transparent w-full rounded-md py-2.5 px-4 outline-none dark:text-gray-100'/>
                         {errors.username && <p className='text-red-400 text-sm'>{errors.username.message}</p>}
                     </section>
                     <section className='flexx space-x-2 mt-5'>
                         <button 
                             type="button" 
                             disabled={isLoading}
-                            className='border-none outline-none rounded-md bg-gray-500 py-2 px-4 text-white hover:opacity-90' onClick={closeHandler}>Close</button>
+                            className='border-none outline-none rounded-md bg-gray-500 dark:bg-gray-600 py-2 px-4 text-white hover:opacity-90' onClick={closeHandler}>Close</button>
                         <button 
                             type="submit" 
                             disabled={isLoading}
-                            className={clsx("border-none outline-none rounded-md py-2 px-4 text-white hover:opacity-90", isLoading ? "bg-gray-400" : "bg-primary")}>
-                            {isLoading ? "Loading" : "Submit"}
+                            className={clsx("border-none outline-none rounded-md py-2 px-4 text-white hover:opacity-90", isLoading ? "bg-gray-400 dark:bg-gray-500" : "bg-primary dark:bg-[#222]")}>
+                            {isLoading ? "Loading..." : "Submit"}
                         </button>
                     </section>
                 </form>
