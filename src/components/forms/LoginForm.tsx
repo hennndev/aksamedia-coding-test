@@ -61,13 +61,11 @@ const LoginForm = () => {
             }, 2000)
         })
     }
-    const showPasswordHandler = (value: boolean) => setShowPassword(value)
-    
     const blurUsernameHandler = () => setIsFocusUsername(false)
     const focusUsernameHandler = () => setIsFocusUsername(true)
-
     const blurPasswordHandler = () => setIsFocusPassword(false)
     const focusPasswordHandler = () => setIsFocusPassword(true)
+    const showPasswordHandler = (value: boolean) => setShowPassword(value)
 
     useEffect(() => {
         if(cookies.rememberMe) {
@@ -81,7 +79,9 @@ const LoginForm = () => {
                 {isError && <p className='mb-3 text-red-500'>{isError}</p>}
                 {/* username */}
                 <section className='flex flex-col mb-3 space-y-1.5'>
-                    <label className='text-primary' htmlFor="username">Username <span className='text-red-500'>*</span></label>
+                    <label className='text-primary' htmlFor="username">
+                        Username <span className='text-red-500'>*</span>
+                    </label>
                     <section className={clsx("flexx border-2 rounded-lg py-2 px-3", isFocusUsername ? "border-2 border-primary" : "border-gray-100")}>
                         <input 
                             type="text" 
@@ -99,7 +99,9 @@ const LoginForm = () => {
                 </section>
                 {/* password */}
                 <section className='flex flex-col mb-3 space-y-1.5'>
-                    <label className='text-primary' htmlFor="password">Password <span className='text-red-500'>*</span></label>
+                    <label className='text-primary' htmlFor="password">
+                        Password <span className='text-red-500'>*</span>
+                    </label>
                     <section className={clsx("flexx border-2 rounded-lg py-2 px-3", isFocusPassword ? "border-2 border-primary" : "border-gray-100")}>
                         <input 
                             type={showPassword ? "text" : "password"} 

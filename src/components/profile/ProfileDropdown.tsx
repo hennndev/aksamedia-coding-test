@@ -9,9 +9,9 @@ import ModalEditProfile from '../modals/ModalEditProfile'
 const ProfileDropdown = () => {
     const { user, setUser } = userStore()
     const [ , , removeCookie ] = useCookies(["user"])
+    const [isDropdown, setIsDropdown] = useState<boolean>(false)
     const [openModalProfile, setOpenModalProfile] = useState<boolean>(false)
     const [openModalEditProfile, setOpenModalEditProfile] = useState<boolean>(false)
-    const [isDropdown, setIsDropdown] = useState<boolean>(false)
 
     const logoutHandler = () => {
         removeCookie("user")

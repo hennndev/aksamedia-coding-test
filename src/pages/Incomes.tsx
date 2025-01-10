@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
+import moment from 'moment'
 import queryString from 'query-string'
 import { useLocation } from 'react-router-dom'
 import { incomesStore } from '../store/incomesStore'
 // components
-import moment from 'moment'
 import HelmetPage from '../components/HelmetPage'
+import Pagination from '../components/Pagination'
 import IncomesTable from '../components/tables/IncomesTable'
 import PageHeaderIncomes from '../components/PageHeaderIncomes'
-import Pagination from '../components/Pagination'
-
 
 const DATA_LIMIT = 10
 

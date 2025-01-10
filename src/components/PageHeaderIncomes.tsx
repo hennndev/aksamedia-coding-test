@@ -2,13 +2,12 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 // components
 import PageHeader from './PageHeader'
-import ModalFilterIncomes from './modals/ModalFilterIncomes'
 import PageHeaderButtons from './PageHeaderButtons'
-
+import ModalFilterIncomes from './modals/ModalFilterIncomes'
 
 const PageHeaderIncomes = () => {
     const navigate = useNavigate()
-    const [openModalSort, setOpenModalSort] = useState<boolean>(false)
+    const [, setOpenModalSort] = useState<boolean>(false)
     const [openModalFilter, setOpenModalFilter] = useState<boolean>(false)
 
     return (

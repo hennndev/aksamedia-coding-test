@@ -22,10 +22,12 @@ type FormTypes = {
 const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
     const location = useLocation()
     const queryStr = queryString.parse(location.search)
-    const { register, handleSubmit, reset, setValue, watch } = useForm<FormTypes>() 
+    const { register, handleSubmit, reset, setValue } = useForm<FormTypes>({
+        defaultValues: {
+            incomeType: "",
+        }
+    }) 
     const { setSearchParams, newQueryParameters, handleSetQueries } = useQueryParams()
-
-    console.log(watch("incomeDateTo"))
 
     const submitHandler = (values: FormTypes) => {
         handleSetQueries(queryStr)
@@ -95,7 +97,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
 
     return (
         <ModalBackdrop>
-            <section className='bg-white dark:bg-primary max-w-[600px] rounded-lg p-8'>
+            <section className='bg-white dark:bg-primary max-w-[400px] md:max-w-[600px] rounded-lg py-8 px-4 md:px-8'>
                 <h1 className='text-xl text-primary dark:text-gray-100 mb-5'>Filter Incomes</h1>
                 <form onSubmit={handleSubmit(submitHandler)} className='mt-2'>
                     <section className='flex flex-col space-y-2 mb-4'>
@@ -105,7 +107,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
                                 required: false
                             })}
                             className='border border-[#ccc] dark:border-gray-600 dark:text-gray-100 bg-transparent dark:bg-primary rounded-md py-2.5 px-4 outline-none'>
-                            <option selected value="">Pilih jenis income</option>
+                            <option value="">Pilih jenis income</option>
                             <option value="Pemasukan aktif">Pemasukan aktif (gaji, bonus, fee, honor, project based, etc)</option>
                             <option value="Pemasukan pasif">Pemasukan pasif(saham, royalti, sewa, affiliate, bunga deposito/tabungan, etc)</option>
                             <option value="Pemasukan bisnis">Pemasukan bisnis (profit, reseller, kemitraan)</option>
@@ -116,7 +118,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
                     {/* jumlah pemasukan */}
                     <section className='flex flex-col space-y-2 mb-4'>
                         <label className='text-primary dark:text-gray-100'>Jumlah pemasukan</label>
-                        <section className='w-full flexx space-x-3'>
+                        <section className='w-full flexx space-x-1 md:space-x-3'>
                             <input 
                                 type="number" 
                                 {...register("minimumIncomeAmount", {
@@ -124,7 +126,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
                                 })}
                                 placeholder='Input minimum amount'
                                 className='w-full border border-[#ccc] dark:border-gray-600 dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'/>
-                            <span>-</span>
+                            <span className='text-primary dark:text-gray-200'>-</span>
                             <input 
                                 type="number" 
                                 {...register("maximumIncomeAmount", {
@@ -137,7 +139,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
                     {/* tanggal pemasukan */}
                     <section className='flex flex-col space-y-2 mb-4'>
                         <label className='text-primary dark:text-gray-100'>Tanggal pemasukan</label>
-                        <section className='w-full flexx space-x-3'>
+                        <section className='w-full flexx space-x-1 md:space-x-3'>
                             {/* tanggal awal */}
                             <input 
                                 type="date" 
@@ -145,7 +147,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
                                     required: false
                                 })}
                                 className='w-full border border-[#ccc] dark:border-gray-600 dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'/>
-                            <span>-</span>
+                            <span className='text-primary dark:text-gray-200'>-</span>
                             {/* tanggal akhir */}
                             <input 
                                 type="date" 

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import clsx from 'clsx'
+import moment from 'moment'
 import { v4 as uuid } from "uuid"
 import { useForm } from 'react-hook-form'
-import { useNavigate, useParams } from 'react-router-dom'
 import { incomesStore } from '../../store/incomesStore'
-import moment from 'moment'
+import { useNavigate, useParams } from 'react-router-dom'
 // components
 import ModalConfirm from '../modals/ModalConfirm'
 
@@ -86,8 +86,6 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
         }
     }, [isEdit, params.id])
 
-    console.log(errors)
-
     return (
         <section className='bg-white dark:bg-primary rounded-lg p-4 shadow-sm'>
             {openModal && isEdit && (
@@ -124,8 +122,8 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
                         {...register("incomeType", {
                             required: "Jenis pemasukan tidak boleh kosong"
                         })}
-                        className='border border-[#ccc] dark:border-gray-600 text-primary dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'>
-                        <option selected value="">Pilih jenis income</option>
+                        className='border border-[#ccc] dark:border-gray-600 text-primary dark:text-gray-100 bg-transparent dark:bg-primary rounded-md py-2.5 px-4 outline-none'>
+                        <option value="">Pilih jenis income</option>
                         <option value="Pemasukan aktif">Pemasukan aktif (gaji, bonus, fee, honor, project based, etc)</option>
                         <option value="Pemasukan pasif">Pemasukan pasif(saham, royalti, sewa, affiliate, bunga deposito/tabungan, etc)</option>
                         <option value="Pemasukan bisnis">Pemasukan bisnis (profit, reseller, kemitraan)</option>

@@ -3,7 +3,6 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 const RequireAuth = () => {
     const [cookies] = useCookies(['user']);
-    
     if(!cookies.user) {
         return <Navigate to='/login' replace={true}/>
     } else {

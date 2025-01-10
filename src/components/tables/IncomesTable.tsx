@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import moment from 'moment'
+import queryString from 'query-string'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { rupiahFormat } from '../../utils/rupiahCurrency'
-import queryString from 'query-string'
 // components
 import ModalConfirm from '../modals/ModalConfirm'
 
@@ -40,7 +40,7 @@ const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
                         setOpenModal(null)
                     }}/>
             )}
-            <table className="w-full text-sm text-left bg-white dark:bg-primary">
+            <table className="w-full table-auto text-sm text-left bg-white dark:bg-primary">
                 <thead className="text-sm text-primary dark:text-gray-100 border-b-2 border-gray-100 dark:border-gray-700">
                     <tr>
                         <th scope="col" className="px-6 py-3 font-medium">
@@ -72,16 +72,16 @@ const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
                             <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
                                 {income.incomeName}
                             </th>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4 whitespace-nowrap">
                                 {income.incomeType}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4 whitespace-nowrap">
                                 {rupiahFormat(income.incomeAmount)}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4 whitespace-nowrap">
                                 {moment(income.incomeDate).format("DD-MM-YYYY")}
                             </td>
-                            <td className="px-6 py-4 text-right">
+                            <td className="px-6 py-4 text-right whitespace-nowrap">
                                 <button className='border-none outline-none cursor-pointer bg-blue-500 dark:bg-blue-700 text-white py-2 px-4 rounded-md mr-2 hover:opacity-90' onClick={() => navigate(`/incomes/edit-income/${income.id}`)}>Edit</button>
                                 <button className='border-none outline-none cursor-pointer bg-red-500 dark:bg-red-700 text-white py-2 px-4 rounded-md hover:opacity-90' onClick={() => openModalDeleteHandler(income.id)}>Delete</button>
                             </td>

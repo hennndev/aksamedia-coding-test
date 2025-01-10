@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
-import queryString from 'query-string'
-import { useQueryParams } from '../hooks/useQueryParams'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { incomesStore } from '../store/incomesStore'
-import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 import clsx from 'clsx'
-
+import queryString from 'query-string'
+import { useLocation } from 'react-router-dom'
+import { useQueryParams } from '../hooks/useQueryParams'
+// components
+import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 
 const DATA_LIMIT = 10
 
@@ -37,7 +36,6 @@ const Pagination = ({currentDataLength, incomes}: PropsTypes) => {
         }
         setSearchParams(newQueryParameters)
     }
-    
     const handleClickPageNumber = (value: number) => {
         handleSetQueries(queryStr)
         if(value === 1) {
@@ -74,9 +72,10 @@ const Pagination = ({currentDataLength, incomes}: PropsTypes) => {
     }, [queryStr.page, currentDataLength])
     
     return (
-        <section className='flex-center my-5'>
+        <section className='flex-center mt-5 pb-5'>
             <section className='flexx space-x-8'>
                 <button 
+                    disabled={page === 1}
                     className={clsx("flexx border-none outline-none", page === 1 ? "cursor-default text-gray-300 hover:text-gray-300 dark:text-gray-700" : "cursor-pointer text-gray-700 dark:text-gray-200")} 
                     onClick={() => page > 1 && handlePrev(page - 1)}>
                     <LuArrowLeft className='mr-2'/>

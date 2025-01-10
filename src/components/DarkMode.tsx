@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import useTheme from '../hooks/useTheme'
+// components
 import { LuMoon, LuSun } from 'react-icons/lu'
 
 const DarkMode = () => {

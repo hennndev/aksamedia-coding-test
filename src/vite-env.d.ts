@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 
-
 type IncomesTypes = Array<IncomeType>
 interface IncomeTypes {
     id: string
@@ -10,8 +9,6 @@ interface IncomeTypes {
     incomeDate: Date
     incomeDescription: string
 }
-
-
 
 interface UserTypes {
     username: string
