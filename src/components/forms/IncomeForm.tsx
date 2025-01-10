@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { incomesStore } from '../../store/incomesStore'
 // components
-import ModalConfirm from '../ModalConfirm'
+import ModalConfirm from '../modals/ModalConfirm'
 
 type FormTypes = {
     incomeName: string

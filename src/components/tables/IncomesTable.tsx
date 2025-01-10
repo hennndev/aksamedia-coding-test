@@ -3,7 +3,7 @@ import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
 import { rupiahFormat } from '../../utils/rupiahCurrency'
 // components
-import ModalConfirm from '../ModalConfirm'
+import ModalConfirm from '../modals/ModalConfirm'
 
 type PropsTypes = {
     incomesData: IncomesTypes

@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import queryString from 'query-string'
+import { useLocation } from 'react-router-dom'
 import { incomesStore } from '../store/incomesStore'
-import { useNavigate, useLocation } from 'react-router-dom'
 // components
-import PageHeader from '../components/PageHeader'
 import HelmetPage from '../components/HelmetPage'
 import IncomesTable from '../components/tables/IncomesTable'
+import PageHeaderIncomes from '../components/PageHeaderIncomes'
 
 const Incomes = () => {
-    const navigate = useNavigate()
     const location = useLocation()
     const { incomes, deleteIncome } = incomesStore()
     const [incomesData, setIncomesData] = useState<IncomesTypes>(incomes)
@@ -33,11 +32,7 @@ const Incomes = () => {
     return (
         <>
             <HelmetPage title='Incomes' content='Incomes page'/>
-            <PageHeader pageTitle='Incomes' isTables>
-                <button className='border border-gray-200 rounded-md text-white text-sm py-2 px-4 bg-primary hover:opacity-90' onClick={() => navigate("/incomes/add-income")}>
-                    Add new income
-                </button>
-            </PageHeader>
+            <PageHeaderIncomes/>
             <section className='p-6'>
                 <IncomesTable incomesData={incomesData} deleteHandler={deleteHandler}/>
                 {incomes.length < 1 && <p className='text-gray-500 text-sm mt-5 text-center'>You don't have incomes currenctly</p>}
