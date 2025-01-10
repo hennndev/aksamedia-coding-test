@@ -1,4 +1,3 @@
-import React from 'react'
 import HelmetPage from '../components/HelmetPage'
 
 const Dashboard = () => {
