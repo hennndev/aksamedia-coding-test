@@ -88,7 +88,6 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
             setValue("incomeDateFrom", moment(queryStr.incomeDateFrom as string, "DD-MM-YYYY").format('YYYY-MM-DD'))
         }
         if(queryStr.incomeDateTo) {
-            console.log(queryStr)
             setValue("incomeDateTo", moment(queryStr.incomeDateTo as string, "DD-MM-YYYY").format('YYYY-MM-DD'))
         }
     }, [location.search])
@@ -96,7 +95,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
 
     return (
         <ModalBackdrop>
-            <section className='bg-white dark:bg-primary     max-w-[600px] rounded-lg p-8'>
+            <section className='bg-white dark:bg-primary max-w-[600px] rounded-lg p-8'>
                 <h1 className='text-xl text-primary dark:text-gray-100 mb-5'>Filter Incomes</h1>
                 <form onSubmit={handleSubmit(submitHandler)} className='mt-2'>
                     <section className='flex flex-col space-y-2 mb-4'>
@@ -105,7 +104,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
                             {...register("incomeType", {
                                 required: false
                             })}
-                            className='border border-[#ccc] dark:border-gray-600 dark:text-gray-100 bg-transparent rounded-md py-2.5 px-4 outline-none'>
+                            className='border border-[#ccc] dark:border-gray-600 dark:text-gray-100 bg-transparent dark:bg-primary rounded-md py-2.5 px-4 outline-none'>
                             <option selected value="">Pilih jenis income</option>
                             <option value="Pemasukan aktif">Pemasukan aktif (gaji, bonus, fee, honor, project based, etc)</option>
                             <option value="Pemasukan pasif">Pemasukan pasif(saham, royalti, sewa, affiliate, bunga deposito/tabungan, etc)</option>

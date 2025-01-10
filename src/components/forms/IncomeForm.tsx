@@ -25,7 +25,7 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
     const navigate = useNavigate()
     const [openModal, setOpenModal] = useState<null | FormTypes>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { register, formState: {errors}, handleSubmit, reset, setValue, watch } = useForm<FormTypes>({
+    const { register, formState: {errors}, handleSubmit, reset, setValue } = useForm<FormTypes>({
         defaultValues: {
             incomeName: "",
             incomeType: "",
@@ -64,6 +64,7 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
                     setIncomes(newIncomes)
                 }
                 reset()
+                setIsLoading(false)
                 navigate("/incomes")
                 resolve(1)
             }, 2000)
@@ -190,7 +191,7 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
                     <button 
                         type='submit'
                         disabled={isLoading}
-                        className={clsx("border-none outline-none rounded-md py-2 px-4 hover:opacity-90", isLoading ? "bg-gray-500 text-primary cursor-default" : "bg-primary dark:bg-[#222] text-white cursor-pointer")}>
+                        className={clsx("border-none outline-none rounded-md py-2 px-4 hover:opacity-90", isLoading ? "bg-gray-300 dark:bg-gray-500 text-primary cursor-default" : "bg-primary dark:bg-[#222] text-white cursor-pointer")}>
                         {isLoading ? "Loading..." : "Submit"}
                     </button>
                 </section>

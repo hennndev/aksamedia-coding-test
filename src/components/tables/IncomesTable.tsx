@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import moment from 'moment'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { rupiahFormat } from '../../utils/rupiahCurrency'
+import queryString from 'query-string'
 // components
 import ModalConfirm from '../modals/ModalConfirm'
 
@@ -10,13 +11,23 @@ type PropsTypes = {
     deleteHandler: (id: string) => void
 }
 
+const DATA_LIMIT = 10
+
 const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
+    const location = useLocation()
     const navigate = useNavigate()
+    const queryStr = queryString.parse(location.search)
     const [openModal, setOpenModal] = useState<null | string>(null)
    
     const openModalDeleteHandler = (id: string) => {
         setOpenModal(id)
     }
+
+    let page = 1 
+    if(queryStr.page) {
+        page = +queryStr.page
+    }
+
     return (
         <section className="relative overflow-x-auto rounded-xl shadow-box-primary">
             {openModal && (
@@ -56,7 +67,7 @@ const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
                     {incomesData.map((income: IncomeTypes, index) => (
                         <tr className="border-b dark:border-gray-700 text-primary dark:text-gray-100" key={income.id}>
                             <td className="px-6 py-4">
-                                {index + 1}
+                                {(index + 1) + ((page - 1) * DATA_LIMIT)}
                             </td>
                             <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
                                 {income.incomeName}

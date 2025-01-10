@@ -7,6 +7,10 @@ import moment from 'moment'
 import HelmetPage from '../components/HelmetPage'
 import IncomesTable from '../components/tables/IncomesTable'
 import PageHeaderIncomes from '../components/PageHeaderIncomes'
+import Pagination from '../components/Pagination'
+
+
+const DATA_LIMIT = 10
 
 const Incomes = () => {
     const location = useLocation()
@@ -14,8 +18,13 @@ const Incomes = () => {
     const [incomesData, setIncomesData] = useState<IncomesTypes>(incomes)
     const queryStr = queryString.parse(location.search)
 
+    let page = 1 
+    if(queryStr.page) {
+        page = +queryStr.page
+    }
+
     const filteringDataIncomes = () => {
-        const queryIncomes = incomes.filter((income: IncomeTypes) => {
+        let queryIncomes = incomes.filter((income: IncomeTypes) => {
             if(queryStr.q) {
                 const keyword = queryStr.q as string
                 return income.incomeName.toLowerCase().replace(/\s/g, "").includes(keyword.toLowerCase().replace(/\s/g, ""))
@@ -62,12 +71,12 @@ const Incomes = () => {
     }
 
     useEffect(() => {
-        if(queryStr.q || queryStr.incomeType || queryStr.minimumIncomeAmount || queryStr.maximumIncomeAmount || queryStr.incomeDateFrom || queryStr.incomeDateTo) {
+        if(queryStr.q || queryStr.incomeType || queryStr.minimumIncomeAmount || queryStr.maximumIncomeAmount || queryStr.incomeDateFrom || queryStr.incomeDateTo || queryStr.page) {
             filteringDataIncomes()
         } else {
             setIncomesData(incomes)
         }
-    }, [queryStr.q, queryStr.incomeType, queryStr.minimumIncomeAmount, queryStr.maximumIncomeAmount, queryStr.incomeDateFrom, queryStr.incomeDateTo])
+    }, [queryStr.q, queryStr.incomeType, queryStr.minimumIncomeAmount, queryStr.maximumIncomeAmount, queryStr.incomeDateFrom, queryStr.incomeDateTo, queryStr.page])
 
     const deleteHandler = (id: string) => {
         deleteIncome(id)
@@ -80,9 +89,12 @@ const Incomes = () => {
             <HelmetPage title='Incomes' content='Incomes page'/>
             <PageHeaderIncomes/>
             <section className='p-6'>
-                <IncomesTable incomesData={incomesData} deleteHandler={deleteHandler}/>
+                <IncomesTable incomesData={incomesData.slice(((page - 1) * DATA_LIMIT), (DATA_LIMIT * page))} deleteHandler={deleteHandler}/>
                 {incomes.length < 1 && <p className='text-gray-500 text-sm mt-5 text-center'>You don't have incomes currenctly</p>}
             </section>
+            <Pagination 
+                incomes={incomesData}
+                currentDataLength={incomesData.slice(((page - 1) * DATA_LIMIT), (DATA_LIMIT * page)).length}/>
         </>
     )
 }
