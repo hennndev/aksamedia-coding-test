@@ -68,7 +68,7 @@ const IncomesTable = ({incomesData, deleteHandler}: PropsTypes) => {
                                 {rupiahFormat(income.incomeAmount)}
                             </td>
                             <td className="px-6 py-4">
-                                {moment(income.incomeDate).add(10, 'days').calendar()}
+                                {moment(income.incomeDate).format("DD-MM-YYYY")}
                             </td>
                             <td className="px-6 py-4 text-right">
                                 <button className='border-none outline-none cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-md mr-2 hover:opacity-90' onClick={() => navigate(`/incomes/edit-income/${income.id}`)}>Edit</button>

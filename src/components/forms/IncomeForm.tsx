@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid"
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { incomesStore } from '../../store/incomesStore'
+import moment from 'moment'
 // components
 import ModalConfirm from '../modals/ModalConfirm'
 
@@ -24,7 +25,7 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
     const navigate = useNavigate()
     const [openModal, setOpenModal] = useState<null | FormTypes>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { register, formState: {errors}, handleSubmit, reset, setValue } = useForm<FormTypes>({
+    const { register, formState: {errors}, handleSubmit, reset, setValue, watch } = useForm<FormTypes>({
         defaultValues: {
             incomeName: "",
             incomeType: "",
@@ -83,7 +84,8 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
             setValue("incomeDescription", income.incomeDescription)
         }
     }, [isEdit, params.id])
-    
+
+    console.log(errors)
 
     return (
         <section className='bg-white rounded-lg p-4 shadow-sm'>
@@ -147,13 +149,16 @@ const IncomeForm = ({isEdit}: PropsTypes) => {
                 </section>
 
                 <section className='flex flex-col space-y-2 mb-4'>
-                    <label htmlFor="incomeAmount" className='text-primary'>Tanggal pemasukan</label>
+                    <label htmlFor="incomeDate" className='text-primary'>Tanggal pemasukan</label>
                     <input 
                         type="date" 
                         disabled={isLoading}
                         id='incomeDate'
                         {...register("incomeDate", {
-                            required: "Tanggal pemasukan tidak boleh kosong"
+                            required: "Tanggal pemasukan tidak boleh kosong",
+                            validate: (value: Date) => {
+                                return new Date(value).getTime() < new Date().getTime() || "Maksimal tanggal yang bisa di set adalah hari ini"
+                            }
                         })}
                         className='border border-[#ccc] rounded-md py-2.5 px-4 outline-none'/>
                     {errors.incomeDate && <p className='text-red-400 text-sm'>{errors.incomeDate.message}</p>}
