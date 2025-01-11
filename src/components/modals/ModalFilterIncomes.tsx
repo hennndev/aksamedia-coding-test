@@ -97,7 +97,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
 
     return (
         <ModalBackdrop>
-            <section className='bg-white dark:bg-primary max-w-[400px] md:max-w-[600px] rounded-lg py-8 px-4 md:px-8'>
+            <section className='bg-white dark:bg-primary max-w-[330px] md:max-w-[600px] rounded-lg py-8 px-4 md:px-8'>
                 <h1 className='text-xl text-primary dark:text-gray-100 mb-5'>Filter Incomes</h1>
                 <form onSubmit={handleSubmit(submitHandler)} className='mt-2'>
                     <section className='flex flex-col space-y-2 mb-4'>
@@ -118,7 +118,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
                     {/* jumlah pemasukan */}
                     <section className='flex flex-col space-y-2 mb-4'>
                         <label className='text-primary dark:text-gray-100'>Jumlah pemasukan</label>
-                        <section className='w-full flexx space-x-1 md:space-x-3'>
+                        <section className='w-full flexx flex-col md:flex-row space-x-1 md:space-x-3'>
                             <input 
                                 type="number" 
                                 {...register("minimumIncomeAmount", {
@@ -139,7 +139,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
                     {/* tanggal pemasukan */}
                     <section className='flex flex-col space-y-2 mb-4'>
                         <label className='text-primary dark:text-gray-100'>Tanggal pemasukan</label>
-                        <section className='w-full flexx space-x-1 md:space-x-3'>
+                        <section className='w-full flexx flex-col md:flex-row space-x-1 md:space-x-3'>
                             {/* tanggal awal */}
                             <input 
                                 type="date" 
@@ -162,7 +162,7 @@ const ModalFilterIncomes = ({closeModalHandler}: PropsTypes) => {
                         <button type='button' className='border-none outline-none rounded-md bg-gray-500 dark:bg-gray-600 py-2 px-4 text-white hover:opacity-90' onClick={closeModalHandler}>Close</button>
                         <button type='button' className='border-none outline-none rounded-md bg-red-500 dark:bg-red-700 py-2 px-4 text-white hover:opacity-90' onClick={resetHandler}>Reset</button>
                         <button type='submit' className='border-none outline-none rounded-md py-2 px-4 text-white bg-primary dark:bg-[#222] hover:opacity-90'>
-                            Filter Incomes
+                            Filter
                         </button>
                     </section>
                 </form>
