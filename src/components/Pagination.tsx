@@ -73,7 +73,7 @@ const Pagination = ({currentDataLength, incomes}: PropsTypes) => {
     
     return (
         <section className='flex-center mt-5 pb-5'>
-            <section className='flexx space-x-8'>
+            <section className='flexx space-x-4 md:space-x-8'>
                 <button 
                     disabled={page === 1}
                     className={clsx("flexx border-none outline-none", page === 1 ? "cursor-default text-gray-300 hover:text-gray-300 dark:text-gray-700" : "cursor-pointer text-gray-700 dark:text-gray-200")} 
@@ -81,7 +81,7 @@ const Pagination = ({currentDataLength, incomes}: PropsTypes) => {
                     <LuArrowLeft className='mr-2'/>
                     Back
                 </button>
-                <section className='flexx space-x-5'>
+                <section className='flexx space-x-2 md:space-x-5'>
                     <section className={clsx("py-1 px-3 rounded-md", page === firstNumber ? "bg-gray-300 dark:bg-gray-200" : "")}>
                         <p className={`cursor-pointer text-gray-700 dark:text-gray-500`} onClick={() => handleClickPageNumber(firstNumber)}>
                             {firstNumber}

@@ -29,9 +29,9 @@ const ProfileDropdown = () => {
             )}
 
             <p className='text-primary dark:text-gray-200 text-[15px]'>
-                {user?.username}
+                {user?.username && user?.username.length > 6 ? `${user?.username.slice(0, 6)}...` : user?.username}
             </p>
-            <LuCircleUserRound className='text-xl text-gray-600 dark:text-gray-300'/>
+            <LuCircleUserRound className='hidden md:text-xl text-gray-600 dark:text-gray-300'/>
             {isDropdown && (
                 <section className='absolute w-[150px] z-50 border border-gray-400 dark:border-gray-700 bg-white dark:bg-[#222] top-14 right-0 rounded-xl py-4 px-2'>
                     <section className='flex flex-col'>
